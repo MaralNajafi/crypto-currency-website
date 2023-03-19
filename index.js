@@ -18,9 +18,12 @@ function updateDOM() {
       return `
             <tr>
                 <th scope="row">${number}</th>
+                <td><img src="${cryptoCurrency.image}" class="crypto-img"></td>
                 <td>${cryptoCurrency.name}</td>
                 <td>${cryptoCurrency.symbol}</td>
-                <td>$${Number(cryptoCurrency.current_price).toLocaleString()}</td>
+                <td>$${Number(
+                  cryptoCurrency.current_price
+                ).toLocaleString()}</td>
             </tr>
         `;
     })
