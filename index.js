@@ -20,7 +20,7 @@ function updateDOM() {
                 <th scope="row">${number}</th>
                 <td>${cryptoCurrency.name}</td>
                 <td>${cryptoCurrency.symbol}</td>
-                <td>${cryptoCurrency.current_price}</td>
+                <td>$${Number(cryptoCurrency.current_price).toLocaleString()}</td>
             </tr>
         `;
     })
