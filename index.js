@@ -18,7 +18,7 @@ function updateDOM() {
                 <td>
                   <div class="d-flex align-items-center justify-content-center">
                     <div>
-                      <svg width="16" height="16" fill="currentColor" class="bi bi-star"><use xlink:href="#star"></use></svg>
+                      <svg width="16" height="16" fill="currentColor" class="bi bi-star" style="cursor: pointer;"><use xlink:href="#star"></use></svg>
                     </div>
                   </div>
                 </td>
