@@ -26,8 +26,11 @@ function updateDOM() {
                 <td class="text-center">$${Number(
                   cryptoCurrency.current_price
                 ).toLocaleString()}</td>
-                <td class="text-center">${Number(cryptoCurrency.price_change_percentage_24h).toFixed(2)
-                }%</td>
+                <td class="text-center ${Number(
+                  cryptoCurrency.price_change_percentage_24h
+                ) < 0 ?' text-danger' : 'text-success'}">${Number(
+                  cryptoCurrency.price_change_percentage_24h
+                ).toFixed(2)}%</td>
             </tr>
         `;
     })
