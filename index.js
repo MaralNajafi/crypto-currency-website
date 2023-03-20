@@ -61,13 +61,15 @@ function updateDOM() {
   document.getElementById("root").innerHTML = cryptoCurrencies;
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
+async function fetchAndUpdate() {
   cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
   updateDOM();
+}
 
+document.addEventListener("DOMContentLoaded", () => {
+  fetchAndUpdate();
   //   refresh every 1 min
   setInterval(async () => {
-    cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
-    updateDOM();
+    fetchAndUpdate();
   }, 60000);
 });
