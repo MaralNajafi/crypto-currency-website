@@ -17,11 +17,11 @@ function updateDOM() {
       number++;
       return `
             <tr>
-                <th scope="row">${number}</th>
-                <td><img src="${cryptoCurrency.image}" class="crypto-img"></td>
-                <td>${cryptoCurrency.name}</td>
-                <td>${cryptoCurrency.symbol}</td>
-                <td>$${Number(
+                <th scope="row" class="text-center">${number}</th>
+                <td class="text-center"><img src="${cryptoCurrency.image}" class="crypto-img"></td>
+                <td class="text-center">${cryptoCurrency.name}</td>
+                <td class="text-center">${cryptoCurrency.symbol}</td>
+                <td class="text-center">$${Number(
                   cryptoCurrency.current_price
                 ).toLocaleString()}</td>
             </tr>
