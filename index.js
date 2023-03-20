@@ -11,13 +11,11 @@ async function fetchAPI(url) {
 let cryptoCurrenciesArray = [];
 
 function updateDOM() {
-  let number = 0;
   const cryptoCurrencies = cryptoCurrenciesArray
     .map((cryptoCurrency) => {
-      number++;
       return `
             <tr>
-                <th scope="row" class="text-center">${number}</th>
+                <th scope="row" class="text-center">${cryptoCurrency.market_cap_rank}</th>
                 <td class="text-center"><img src="${cryptoCurrency.image}" class="crypto-img"></td>
                 <td class="text-left" colspan="2">${cryptoCurrency.name}</td>
                 <td class="text-center">${cryptoCurrency.symbol}</td>
