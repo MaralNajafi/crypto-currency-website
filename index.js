@@ -19,7 +19,7 @@ function updateDOM() {
             <tr>
                 <th scope="row" class="text-center">${number}</th>
                 <td class="text-center"><img src="${cryptoCurrency.image}" class="crypto-img"></td>
-                <td class="text-center">${cryptoCurrency.name}</td>
+                <td class="text-left" colspan="2">${cryptoCurrency.name}</td>
                 <td class="text-center">${cryptoCurrency.symbol}</td>
                 <td class="text-center">$${Number(
                   cryptoCurrency.current_price
