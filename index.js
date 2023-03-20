@@ -15,6 +15,13 @@ function updateDOM() {
     .map((cryptoCurrency) => {
       return `
             <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <svg width="16" height="16" fill="currentColor" class="bi bi-star"><use xlink:href="#star"></use></svg>
+                    </div>
+                  </div>
+                </td>
                 <th scope="row" class="text-center">${
                   cryptoCurrency.market_cap_rank
                 }</th>
@@ -26,11 +33,15 @@ function updateDOM() {
                 <td class="text-center">$${Number(
                   cryptoCurrency.current_price
                 ).toLocaleString()}</td>
-                <td class="text-center ${Number(
-                  cryptoCurrency.price_change_percentage_24h
-                ) < 0 ?' text-danger' : 'text-success'}">${Number(
-                  cryptoCurrency.price_change_percentage_24h
-                ).toFixed(2)}%</td>
+                <td class="text-center ${
+                  Number(cryptoCurrency.price_change_percentage_24h) < 0
+                    ? " text-danger"
+                    : "text-success"
+                }">
+                ${Number(cryptoCurrency.price_change_percentage_24h).toFixed(
+                  2
+                )}%
+                </td>
             </tr>
         `;
     })
