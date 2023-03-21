@@ -18,9 +18,9 @@ function updateDOM() {
             <tr>
                 <td>
                   <div class="d-flex align-items-center justify-content-center">
-                    <div class="fav-icon" data-id="${cryptoCurrency.id}">
+                    <button class="fav-icon reset-btn" data-id="${cryptoCurrency.id}">
                       <svg width="16" height="16" fill="currentColor" class="bi bi-star" style="cursor: pointer;"><use style="pointer-events: none;" xlink:href="#star"></use></svg>
-                    </div>
+                    </button>
                   </div>
                 </td>
                 <th scope="row" class="text-left">${
@@ -70,7 +70,7 @@ function addEventListenerToFavIcons() {
       const useTag = event.target.firstChild;
       const svgTag = event.target.closest("svg");
       useTag.setAttribute("xlink:href", "#star-fill");
-      svgTag.style.fill = "#ffc107"
+      svgTag.style.fill = "#ffc107";
     });
   });
 }
@@ -78,7 +78,6 @@ function addEventListenerToFavIcons() {
 function addFavoriteCoinToLocalStorage(favoriteCoinID) {
   favoriteCoinsIDs.push(favoriteCoinID);
   localStorage.setItem("favoriteCoinsIDs", favoriteCoinsIDs);
-
 }
 
 async function fetchAndUpdate() {
