@@ -23,7 +23,12 @@ function updateDOM() {
                     <button class="fav-icon reset-btn" data-id="${
                       cryptoCurrency.id
                     }">
-                      <svg width="16" height="16" fill=${isFavorite ? "#ffc107" : "currentColor"} class="bi bi-star" style="cursor: pointer;">
+                      <svg 
+                      width="16" 
+                      height="16" 
+                      fill=${isFavorite ? "#ffc107" : "currentColor"} 
+                      class="bi bi-star" 
+                      style="cursor: ${isFavorite ? "default" : "pointer"};">
                         <use style="pointer-events: none;" xlink:href=${isFavorite ? "#star-fill" : "#star"}></use>
                       </svg>
                     </button>
@@ -72,15 +77,22 @@ function updateDOM() {
 function addEventListenerToFavIcons() {
   const favIcons = document.querySelectorAll(".fav-icon");
   favIcons.forEach((favIcon) => {
-    
+
     favIcon.addEventListener("click", (event) => {
       const favoriteCoinID = event.target.closest("button").dataset.id;
-      addFavoriteCoinToLocalStorage(favoriteCoinID);
+      isFavorite = favoriteCoinsIDs.includes(favoriteCoinID);
+      if(isFavorite){
+        return
+      }else{
+        addFavoriteCoinToLocalStorage(favoriteCoinID);
 
-      const useTag = event.target.firstElementChild;
-      const svgTag = event.target.closest("svg");
-      useTag.setAttribute("xlink:href", "#star-fill");
-      svgTag.style.fill = "#ffc107";
+        const useTag = event.target.firstElementChild;
+        const svgTag = event.target.closest("svg");
+        useTag.setAttribute("xlink:href", "#star-fill");
+        svgTag.style.fill = "#ffc107";
+        svgTag.style.cursor = "default";
+      }
+      
     });
 
   });
