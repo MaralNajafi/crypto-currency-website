@@ -9,6 +9,7 @@ async function fetchAPI(url) {
 }
 
 let cryptoCurrenciesArray = [];
+let favoriteCoinsIDs = [];
 
 function updateDOM() {
   const cryptoCurrencies = cryptoCurrenciesArray
@@ -72,6 +73,12 @@ function addEventListenerToFavIcons() {
       svgTag.style.fill = "#ffc107"
     });
   });
+}
+
+function addFavoriteCoinToLocalStorage(favoriteCoinID) {
+  favoriteCoinsIDs.push(favoriteCoinID);
+  localStorage.setItem("favoriteCoinsIDs", favoriteCoinsIDs);
+
 }
 
 async function fetchAndUpdate() {
