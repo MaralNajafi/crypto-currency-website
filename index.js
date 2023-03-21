@@ -18,7 +18,9 @@ function updateDOM() {
             <tr>
                 <td>
                   <div class="d-flex align-items-center justify-content-center">
-                    <button class="fav-icon reset-btn" data-id="${cryptoCurrency.id}">
+                    <button class="fav-icon reset-btn" data-id="${
+                      cryptoCurrency.id
+                    }">
                       <svg width="16" height="16" fill="currentColor" class="bi bi-star" style="cursor: pointer;"><use style="pointer-events: none;" xlink:href="#star"></use></svg>
                     </button>
                   </div>
@@ -67,6 +69,8 @@ function addEventListenerToFavIcons() {
   const favIcons = document.querySelectorAll(".fav-icon");
   favIcons.forEach((favIcon) => {
     favIcon.addEventListener("click", (event) => {
+      const favoriteCoinID = event.target.closest("button").dataset.id;
+      addFavoriteCoinToLocalStorage(favoriteCoinID);
       const useTag = event.target.firstChild;
       const svgTag = event.target.closest("svg");
       useTag.setAttribute("xlink:href", "#star-fill");
@@ -80,6 +84,13 @@ function addFavoriteCoinToLocalStorage(favoriteCoinID) {
   localStorage.setItem("favoriteCoinsIDs", favoriteCoinsIDs);
 }
 
+function updateFavoriteCoinsIDsFromLocalStorage() {
+  const localStorageFavoriteCoinsIDs = localStorage.getItem("favoriteCoinsIDs");
+  favoriteCoinsIDs = localStorageFavoriteCoinsIDs
+    ? localStorageFavoriteCoinsIDs.split(",")
+    : [];
+}
+
 async function fetchAndUpdate() {
   cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
   updateDOM();
@@ -87,6 +98,7 @@ async function fetchAndUpdate() {
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchAndUpdate();
+  updateFavoriteCoinsIDsFromLocalStorage();
   //   refresh every 1 min
   setInterval(async () => {
     fetchAndUpdate();
