@@ -72,14 +72,17 @@ function updateDOM() {
 function addEventListenerToFavIcons() {
   const favIcons = document.querySelectorAll(".fav-icon");
   favIcons.forEach((favIcon) => {
+    
     favIcon.addEventListener("click", (event) => {
       const favoriteCoinID = event.target.closest("button").dataset.id;
       addFavoriteCoinToLocalStorage(favoriteCoinID);
-      const useTag = event.target.firstChild;
+
+      const useTag = event.target.firstElementChild;
       const svgTag = event.target.closest("svg");
       useTag.setAttribute("xlink:href", "#star-fill");
       svgTag.style.fill = "#ffc107";
     });
+
   });
 }
 
