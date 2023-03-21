@@ -17,8 +17,8 @@ function updateDOM() {
             <tr>
                 <td>
                   <div class="d-flex align-items-center justify-content-center">
-                    <div>
-                      <svg width="16" height="16" fill="currentColor" class="bi bi-star" style="cursor: pointer;"><use xlink:href="#star"></use></svg>
+                    <div class="fav-icon" data-id="${cryptoCurrency.id}">
+                      <svg width="16" height="16" fill="currentColor" class="bi bi-star" style="cursor: pointer;"><use style="pointer-events: none;" xlink:href="#star"></use></svg>
                     </div>
                   </div>
                 </td>
@@ -59,6 +59,19 @@ function updateDOM() {
     .join("");
 
   document.getElementById("root").innerHTML = cryptoCurrencies;
+  addEventListenerToFavIcons();
+}
+
+function addEventListenerToFavIcons() {
+  const favIcons = document.querySelectorAll(".fav-icon");
+  favIcons.forEach((favIcon) => {
+    favIcon.addEventListener("click", (event) => {
+      const useTag = event.target.firstChild;
+      const svgTag = event.target.closest("svg");
+      useTag.setAttribute("xlink:href", "#star-fill");
+      svgTag.style.fill = "#ffc107"
+    });
+  });
 }
 
 async function fetchAndUpdate() {
