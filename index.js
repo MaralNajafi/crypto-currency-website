@@ -10,10 +10,12 @@ async function fetchAPI(url) {
 
 let cryptoCurrenciesArray = [];
 let favoriteCoinsIDs = [];
+let isFavorite = false;
 
 function updateDOM() {
   const cryptoCurrencies = cryptoCurrenciesArray
     .map((cryptoCurrency) => {
+      isFavorite = favoriteCoinsIDs.includes(cryptoCurrency.id)
       return `
             <tr>
                 <td>
@@ -21,7 +23,9 @@ function updateDOM() {
                     <button class="fav-icon reset-btn" data-id="${
                       cryptoCurrency.id
                     }">
-                      <svg width="16" height="16" fill="currentColor" class="bi bi-star" style="cursor: pointer;"><use style="pointer-events: none;" xlink:href="#star"></use></svg>
+                      <svg width="16" height="16" fill=${isFavorite ? "#ffc107" : "currentColor"} class="bi bi-star" style="cursor: pointer;">
+                        <use style="pointer-events: none;" xlink:href=${isFavorite ? "#star-fill" : "#star"}></use>
+                      </svg>
                     </button>
                   </div>
                 </td>
