@@ -12,7 +12,7 @@ let cryptoCurrenciesArray = [];
 let favoriteCoinsIDs = [];
 let isFavorite = false;
 
-function updateDOM() {
+function updateDOM(cryptoCurrenciesArray) {
   const cryptoCurrencies = cryptoCurrenciesArray
     .map((cryptoCurrency) => {
       isFavorite = favoriteCoinsIDs.includes(cryptoCurrency.id);
@@ -120,14 +120,31 @@ function updateFavoriteCoinsIDsFromLocalStorage() {
     : [];
 }
 
+/* Search Coins */
+//DOM variables
+const searchCoinForm = document.getElementById("search-coin-form");
+const searchCoinInput = document.getElementById("search-coin-input");
+
+function searchCoins(event) {
+  const searchedValue = event.target.value;
+  const CryptoCurrencyToShow = cryptoCurrenciesArray.filter(
+    (cryptoCurrency) =>
+      cryptoCurrency.name.toLowerCase().includes(searchedValue) ||
+      cryptoCurrency.symbol.toLowerCase().includes(searchedValue)
+  );
+  updateDOM(CryptoCurrencyToShow);
+}
+
 async function fetchAndUpdate() {
   cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
-  updateDOM();
+  updateDOM(cryptoCurrenciesArray);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchAndUpdate();
   updateFavoriteCoinsIDsFromLocalStorage();
+  searchCoinInput.addEventListener("input", searchCoins);
+  searchCoinForm.addEventListener("submit", (e) => e.preventDefault());
   //   refresh every 1 min
   setInterval(async () => {
     fetchAndUpdate();
