@@ -64,6 +64,9 @@ function updateDOM(cryptoCurrenciesArray) {
             </tr>
         `;
     })
+    .sort(function (a, b) {
+      return a - b;
+    })
     .join("");
 
   document.getElementById("root").innerHTML = cryptoCurrencies;
