@@ -19,7 +19,7 @@ function updateDOM(cryptoCurrenciesArray) {
       return `
             <tr>
                 <td>
-                  <div class="d-flex align-items-center justify-content-center">
+                  <div class="d-flex align-items-center justify-content-end">
                     <button class="fav-icon reset-btn" data-id="${
                       cryptoCurrency.id
                     }">
@@ -36,25 +36,17 @@ function updateDOM(cryptoCurrenciesArray) {
                     </button>
                   </div>
                 </td>
-                <th scope="row" class="text-left">${
-                  cryptoCurrency.market_cap_rank
-                }</th>
-                <td class="text-left"><img src="${
-                  cryptoCurrency.image
-                }" class="crypto-img"></td>
-                <td class="text-left font-weight-bold" colspan="2">${
-                  cryptoCurrency.name
-                }</td>
-                <td 
-                  class="
-                    text-center 
-                    text-uppercase 
-                    font-weight-bold 
-                    text-secondary
-                  "
-                >
-                ${cryptoCurrency.symbol}
+                <th scope="row" class="text-center">
+                ${cryptoCurrency.market_cap_rank}
+                </th>
+                <td class="text-left font-weight-bold" colspan="2">
+                  <img src="${cryptoCurrency.image}" class="crypto-img pe-2">
+                  ${cryptoCurrency.name} 
+                  <span class="fs-6 text-uppercase text-secondary fw-light">
+                  ${cryptoCurrency.symbol}
+                  </span>
                 </td>
+                
                 <td class="text-center font-weight-bold">$${Number(
                   cryptoCurrency.current_price
                 )
