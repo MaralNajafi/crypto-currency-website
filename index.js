@@ -47,12 +47,12 @@ function updateDOM(cryptoCurrenciesArray) {
                   </span>
                 </td>
                 
-                <td class="text-center font-weight-bold">$${Number(
+                <td class="text-center fw-bold">$${Number(
                   cryptoCurrency.current_price
                 )
                   .toFixed(2)
                   .toLocaleString()}</td>
-                <td class="text-left ${
+                <td class="text-left fw-bold ${
                   Number(cryptoCurrency.price_change_percentage_24h) < 0
                     ? " text-danger"
                     : "text-success"
@@ -61,6 +61,16 @@ function updateDOM(cryptoCurrenciesArray) {
                   2
                 )}%
                 </td>
+                <td class="text-left font-weight-bold">$${Number(
+                  cryptoCurrency.high_24h
+                )
+                  .toFixed(2)
+                  .toLocaleString()}</td>
+                  <td class="text-left font-weight-bold">$${Number(
+                    cryptoCurrency.low_24h
+                  )
+                    .toFixed(2)
+                    .toLocaleString()}</td>
             </tr>
         `;
     })
