@@ -14,6 +14,9 @@ let isFavorite = false;
 
 function updateDOM(cryptoCurrenciesArray) {
   const cryptoCurrencies = cryptoCurrenciesArray
+    .sort(function (a, b) {
+      return a.market_cap_rank - b.market_cap_rank;
+    })
     .map((cryptoCurrency) => {
       isFavorite = favoriteCoinsIDs.includes(cryptoCurrency.id);
       return `
@@ -73,9 +76,6 @@ function updateDOM(cryptoCurrenciesArray) {
                     .toLocaleString()}</td>
             </tr>
         `;
-    })
-    .sort(function (a, b) {
-      return a - b;
     })
     .join("");
 
