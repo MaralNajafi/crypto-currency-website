@@ -58,9 +58,10 @@ function updateWatchListDOM(cryptoCurrenciesArray) {
                 
                 <td class="text-center fw-bold">$${Number(
                   cryptoCurrency.current_price
-                )
-                  .toFixed(2)
-                  .toLocaleString()}</td>
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}</td>
                 <td class="text-left fw-bold ${
                   Number(cryptoCurrency.price_change_percentage_24h) < 0
                     ? " text-danger"
@@ -72,14 +73,16 @@ function updateWatchListDOM(cryptoCurrenciesArray) {
                 </td>
                 <td class="text-left font-weight-bold">$${Number(
                   cryptoCurrency.high_24h
-                )
-                  .toFixed(2)
-                  .toLocaleString()}</td>
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}</td>
                   <td class="text-left font-weight-bold">$${Number(
                     cryptoCurrency.low_24h
-                  )
-                    .toFixed(2)
-                    .toLocaleString()}</td>
+                  ).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}</td>
             </tr>
         `;
     })
