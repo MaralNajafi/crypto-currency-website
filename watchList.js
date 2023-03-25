@@ -128,7 +128,7 @@ const searchCoinForm = document.getElementById("search-coin-form");
 const searchCoinInput = document.getElementById("search-coin-input");
 
 function searchCoins(event) {
-  const searchedValue = event.target.value;
+  const searchedValue = event.target.value.toLowerCase();
   const CryptoCurrencyToShow = watchListArray.filter(
     (cryptoCurrency) =>
       cryptoCurrency.name.toLowerCase().includes(searchedValue) ||
