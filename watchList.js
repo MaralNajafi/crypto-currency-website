@@ -13,8 +13,6 @@ let favoriteCoinsIDs = [];
 let isFavorite = false;
 
 async function updateWatchListArray() {
-  cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
-
   watchListArray = cryptoCurrenciesArray.filter((cryptoCurrency) => {
     return favoriteCoinsIDs.includes(cryptoCurrency.id);
   });
@@ -28,7 +26,7 @@ function updateWatchListDOM(cryptoCurrenciesArray) {
     .map((cryptoCurrency) => {
       isFavorite = favoriteCoinsIDs.includes(cryptoCurrency.id);
       return `
-            <tr>
+            <tr class="fav-coin" data-id="${cryptoCurrency.id}">
                 <td>
                   <div class="d-flex align-items-center justify-content-end">
                     <button class="fav-icon reset-btn" data-id="${
@@ -93,21 +91,21 @@ function updateWatchListDOM(cryptoCurrenciesArray) {
 
 function addEventListenerToFavIcons() {
   const favIcons = document.querySelectorAll(".fav-icon");
+
   favIcons.forEach((favIcon) => {
     favIcon.addEventListener("click", (event) => {
       const favoriteCoinID = event.target.closest("button").dataset.id;
-      isFavorite = favoriteCoinsIDs.includes(favoriteCoinID);
       const useTag = event.target.firstElementChild;
       const svgTag = event.target.closest("svg");
-      if (isFavorite) {
-        const removeIndex = favoriteCoinsIDs.findIndex(
-          (id) => id === favoriteCoinID
-        );
-        removeFavoriteCoinToLocalStorage(removeIndex);
-        useTag.setAttribute("xlink:href", "#star");
-        svgTag.style.fill = "currentColor";
-        return;
-      }
+      useTag.setAttribute("xlink:href", "#star");
+      svgTag.style.fill = "currentColor";
+      const removeIndex = favoriteCoinsIDs.findIndex(
+        (id) => id === favoriteCoinID
+      );
+      removeFavoriteCoinToLocalStorage(removeIndex);
+      updateFavoriteCoinsIDsFromLocalStorage();
+      updateWatchListArray();
+      updateWatchListDOM(watchListArray);
     });
   });
 }
@@ -144,10 +142,11 @@ async function fetchAndUpdate() {
   updateWatchListDOM(watchListArray);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   updateFavoriteCoinsIDsFromLocalStorage();
+  cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
   updateWatchListArray();
-  fetchAndUpdate();
+  updateWatchListDOM(watchListArray);
   searchCoinInput.addEventListener("input", searchCoins);
   searchCoinForm.addEventListener("submit", (e) => e.preventDefault());
   //   refresh every 1 min
