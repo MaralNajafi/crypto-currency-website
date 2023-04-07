@@ -11,6 +11,7 @@ async function fetchAPI(url) {
 let cryptoCurrenciesArray = [];
 let favoriteCoinsIDs = [];
 let isFavorite = false;
+let searchedValue;
 
 function updateDOM(cryptoCurrenciesArray) {
   const cryptoCurrencies = cryptoCurrenciesArray
@@ -134,7 +135,15 @@ const searchCoinForm = document.getElementById("search-coin-form");
 const searchCoinInput = document.getElementById("search-coin-input");
 
 function searchCoins(event) {
-  const searchedValue = event.target.value.toLowerCase();
+  searchedValue = event.target.value.toLowerCase();
+  filterAndUpdate();
+}
+
+function filterAndUpdate() {
+  if (!searchedValue || searchedValue === "") {
+    updateDOM(cryptoCurrenciesArray);
+    return;
+  }
   const CryptoCurrencyToShow = cryptoCurrenciesArray.filter(
     (cryptoCurrency) =>
       cryptoCurrency.name.toLowerCase().includes(searchedValue) ||
@@ -145,7 +154,7 @@ function searchCoins(event) {
 
 async function fetchAndUpdate() {
   cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
-  updateDOM(cryptoCurrenciesArray);
+  filterAndUpdate(cryptoCurrenciesArray);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
