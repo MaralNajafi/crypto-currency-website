@@ -2,10 +2,17 @@ const CRYPTO_CURRENCY_API_URL =
   "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
 
 async function fetchAPI(url) {
-  const data = await fetch(url);
-  const dataJson = await data.json();
-  console.log(dataJson);
-  return dataJson;
+  try {
+    const data = await fetch(url);
+    if (data.ok) {
+      const dataJson = await data.json();
+      return dataJson;
+    } else {
+      throw Error();
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 let cryptoCurrenciesArray = [];
@@ -153,8 +160,16 @@ function filterAndUpdate() {
 }
 
 async function fetchAndUpdate() {
-  cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
-  filterAndUpdate(cryptoCurrenciesArray);
+  try {
+    cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
+    if (cryptoCurrenciesArray) {
+      filterAndUpdate(cryptoCurrenciesArray);
+    } else {
+      throw Error("failed to fetch data");
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -163,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
   searchCoinInput.addEventListener("input", searchCoins);
   searchCoinForm.addEventListener("submit", (e) => e.preventDefault());
   //   refresh every 1 min
-  setInterval(async () => {
+  setInterval(() => {
     fetchAndUpdate();
   }, 60000);
 });

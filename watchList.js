@@ -2,9 +2,17 @@ const CRYPTO_CURRENCY_API_URL =
   "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
 
 async function fetchAPI(url) {
-  const data = await fetch(url);
-  const dataJson = await data.json();
-  return dataJson;
+  try {
+    const data = await fetch(url);
+    if (data.status === "404") {
+      const dataJson = await data.json();
+      return dataJson;
+    } else {
+      throw Error("404");
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 let cryptoCurrenciesArray = [];
@@ -13,11 +21,18 @@ let favoriteCoinsIDs = [];
 let isFavorite = false;
 let searchedValue;
 
-
 async function updateWatchListArray() {
-  watchListArray = cryptoCurrenciesArray.filter((cryptoCurrency) => {
-    return favoriteCoinsIDs.includes(cryptoCurrency.id);
-  });
+  try {
+    if (cryptoCurrenciesArray) {
+      watchListArray = cryptoCurrenciesArray.filter((cryptoCurrency) => {
+        return favoriteCoinsIDs.includes(cryptoCurrency.id);
+      });
+    } else {
+      throw Error("failed to fetch data!");
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function updateWatchListDOM(cryptoCurrenciesArray) {
@@ -157,13 +172,22 @@ async function fetchAndUpdate() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   updateFavoriteCoinsIDsFromLocalStorage();
-  cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
-  updateWatchListArray();
-  updateWatchListDOM(watchListArray);
+  try {
+    cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
+
+    if (cryptoCurrenciesArray) {
+      updateWatchListArray();
+      updateWatchListDOM(watchListArray);
+    } else {
+      throw Error("failed to fetch data!");
+    }
+  } catch (error) {
+    console.log(error);
+  }
   searchCoinInput.addEventListener("input", searchCoins);
   searchCoinForm.addEventListener("submit", (e) => e.preventDefault());
   //   refresh every 1 min
-  setInterval(async () => {
+  setInterval(() => {
     fetchAndUpdate();
-  }, 10000);
+  }, 60000);
 });
