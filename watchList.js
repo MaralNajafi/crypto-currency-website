@@ -4,11 +4,11 @@ const CRYPTO_CURRENCY_API_URL =
 async function fetchAPI(url) {
   try {
     const data = await fetch(url);
-    if (data.status === "404") {
+    if (data.ok) {
       const dataJson = await data.json();
       return dataJson;
     } else {
-      throw Error("404");
+      throw Error();
     }
   } catch (error) {
     console.log(error);
@@ -172,16 +172,16 @@ async function fetchAndUpdate() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   updateFavoriteCoinsIDsFromLocalStorage();
-  try {
+  try{
     cryptoCurrenciesArray = await fetchAPI(CRYPTO_CURRENCY_API_URL);
 
     if (cryptoCurrenciesArray) {
       updateWatchListArray();
       updateWatchListDOM(watchListArray);
-    } else {
-      throw Error("failed to fetch data!");
+    }else{
+      throw Error("failed to fetch data!")
     }
-  } catch (error) {
+  }catch(error){
     console.log(error);
   }
   searchCoinInput.addEventListener("input", searchCoins);
